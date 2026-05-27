@@ -1,0 +1,37 @@
+{
+  "name": "ralph-harness",
+  "version": "0.1.0",
+  "description": "A portable multi-agent harness for long-running coding work.",
+  "type": "module",
+  "bin": {
+    "ralph-harness": "./bin/ralph-harness.mjs"
+  },
+  "scripts": {
+    "check": "node --check ./bin/ralph-harness.mjs && node ./bin/ralph-harness.mjs init /private/tmp/ralph-harness-check --force && node ./bin/ralph-harness.mjs doctor /private/tmp/ralph-harness-check"
+  },
+  "keywords": [
+    "agent",
+    "harness",
+    "coding-agent",
+    "claude-code",
+    "codex",
+    "multi-agent"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin",
+    ".claude-plugin",
+    "agents",
+    "skills",
+    "templates",
+    "docs",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md"
+  ]
+}

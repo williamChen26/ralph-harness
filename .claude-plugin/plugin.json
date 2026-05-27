@@ -1,0 +1,20 @@
+{
+  "name": "ralph-harness",
+  "description": "Sprint-based agent harness and reusable skills for long-running coding work.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Ralph Harness contributors"
+  },
+  "homepage": "https://github.com/ralph-harness/ralph-harness",
+  "repository": "https://github.com/ralph-harness/ralph-harness",
+  "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "harness",
+    "coding-agent",
+    "claude-code",
+    "codex",
+    "multi-agent",
+    "quality-gate"
+  ]
+}
