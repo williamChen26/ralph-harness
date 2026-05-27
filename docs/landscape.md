@@ -29,16 +29,3 @@ Ralph supports two install shapes:
 
 - Skills-only: `npx skills add <owner>/ralph-harness --skill harness -a claude-code`
 - Full scaffold: `ralph-harness init`
-
-## References
-
-- OpenAI, "Harness engineering: leveraging Codex in an agent-first world": https://openai.com/index/harness-engineering/
-- Anthropic, "Harness design for long-running application development": https://www.anthropic.com/engineering/harness-design-long-running-apps
-- anthropics/skills: https://github.com/anthropics/skills
-- revfactory/harness: https://github.com/revfactory/harness
-- Agent Almanac: https://github.com/pjt222/agent-almanac
-- Agent Skills Hub: https://github.com/agent-skills-hub/agent-skills-hub
-- AgentOpen: https://www.agentopen.dev/
-- harnext: https://www.harnext.dev/
-- Open Harness: https://openharness.ai/
-- OpenHands paper: https://arxiv.org/abs/2407.16741
