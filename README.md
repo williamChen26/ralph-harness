@@ -1,23 +1,30 @@
 # Ralph Harness
 
-Ralph Harness is a portable multi-agent workflow for long-running software work. Planner turns a requirement into a spec, Generator proposes and implements one sprint contract at a time, and Evaluator acts as a hard quality gate.
+Ralph Harness is a portable multi-agent scaffold for long-running software work. It turns a vague requirement into a written plan, executes one feature slice at a time, and forces every handoff through reviewable files.
 
-It is intentionally light. There is no model runtime, no hosted service, and no lock-in. The package is both a skills collection and a harness scaffold.
+It does not ship a model runtime or hosted service. The package is a small collection of Agent Skills, specialized agent prompts, and repo-local planning docs that can be installed into an existing project.
 
-- Use the `skills/` and `agents/` library when you only want reusable skills or subagents.
-- Use `ralph-harness init` when you want the full harness: skills, subagents, `AGENTS.md`, and `docs/exec-plans`.
+Repository: [williamChen26/ralph-harness](https://github.com/williamChen26/ralph-harness)
 
-## Why This Exists
+## What It Installs
 
-Modern coding agents are strong enough to build whole features, but long tasks still drift. Ralph Harness makes the work legible by forcing every handoff through files:
+`ralph-harness init` installs the full harness:
 
-- `spec.md` captures the product blueprint.
-- `contract.md` defines exactly one sprint slice.
-- `build-log.md` records implementation evidence.
-- `evaluation.md` records independent review.
-- `meta.json` is the resumable state machine.
+- `AGENTS.md` with repo-level operating instructions
+- `docs/exec-plans/*` for resumable specs, sprint contracts, build logs, and evaluations
+- Agent Skills for supported coding agents
+- Planner, Generator, and Evaluator agent definitions where the target tool supports custom agents
 
-The result is a small "agent operating system" for repos where humans steer and agents execute.
+Default install targets:
+
+| Tool surface | Skills | Agents |
+| --- | --- | --- |
+| Portable / Codex skill discovery | `.agents/skills/*` | `.agents/agents/*` |
+| Claude Code | `.claude/skills/*` | `.claude/agents/*` |
+| Cursor | `.cursor/skills/*` | `.cursor/agents/*` |
+| Codex custom agents | Uses `.agents/skills/*` | `.codex/agents/*.toml` |
+
+Codex currently discovers repo skills from `.agents/skills`, so Ralph keeps that as the shared skill location. Codex custom agents use `.codex/agents/*.toml`, while Cursor uses `.cursor/skills` and `.cursor/agents`.
 
 ## Install
 
@@ -40,31 +47,31 @@ ralph-harness init [target] [--force]
 ralph-harness doctor [target]
 ```
 
-`init` installs:
+`doctor` checks whether the full scaffold is present.
 
-- `.agents/agents/*` and `.agents/skills/*`
-- `.claude/agents/*` and `.claude/skills/*`
-- `AGENTS.md`
-- `docs/exec-plans/*`
+Install only one adapter surface:
 
-Use `--agents-only`, `--claude-only`, or `--docs-only` if you want a smaller install.
+```sh
+ralph-harness init --shared-only
+ralph-harness init --claude-only
+ralph-harness init --cursor-only
+ralph-harness init --codex-only
+ralph-harness init --docs-only
+```
+
+`--agents-only` remains as a backward-compatible alias for `--shared-only`.
 
 ## Skills-Only Install
 
-For standalone skill installs, use the standard `skills` CLI rather than the `ralph-harness` scaffold installer:
+For standalone skill installs, use the standard `skills` CLI instead of the scaffold installer:
 
 ```sh
-# Install one skill into Claude Code
-npx skills add <owner>/ralph-harness --skill harness -a claude-code
-
-# Install one skill into Codex
-npx skills add <owner>/ralph-harness --skill harness -a codex
-
-# Install all Ralph skills
-npx skills add <owner>/ralph-harness --skill '*' -a claude-code
+npx skills@latest add williamChen26/ralph-harness
 ```
 
-This works because every skill lives at the mainstream path `skills/<name>/SKILL.md`.
+The installer will let you choose which skills and target coding agents to install into. This installs skills only; it does not install Ralph's Planner, Generator, or Evaluator custom agents. Use `ralph-harness init` when you want the full scaffold with skills, agents, `AGENTS.md`, and `docs/exec-plans`.
+
+The skills CLI works here because every skill lives at the standard path `skills/<name>/SKILL.md`.
 
 ## The Ralph Loop
 
@@ -81,22 +88,23 @@ while features remain:
 archive completed run
 ```
 
-## What Makes It Different
+## Why This Exists
 
-Many open agent harnesses focus on model routing, a universal runtime API, CI runners, or sandboxed software agents. Ralph Harness focuses on the thin layer that survives across tools: written contracts, progressive disclosure, hard evaluation, and repo-local memory.
+Modern coding agents can build large features, but long tasks still drift. Ralph Harness adds the thin layer that survives across tools: written contracts, progressive disclosure, hard evaluation, and repo-local memory.
 
-That makes it useful when you already like your agent but want it to behave better on multi-hour or multi-day work.
+The result is a small "agent operating system" for repositories where humans steer and agents execute.
 
 ## Project Shape
 
 ```text
 bin/                    zero-dependency installer CLI
 skills/                 canonical skill library: skills/<name>/SKILL.md
-agents/                 canonical subagent library: agents/<name>.md
+agents/                 canonical agent prompts: agents/<name>.md
 .claude-plugin/         Claude Code plugin metadata
 templates/              scaffold-only docs and AGENTS.md
   docs/exec-plans/      state machine and audit trail
 docs/
+  architecture.md       design notes for this package
   landscape.md          notes from public harness projects
 ```
 

@@ -1,10 +1,10 @@
 {
   "name": "ralph-harness",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A portable multi-agent harness for long-running coding work.",
   "type": "module",
   "bin": {
-    "ralph-harness": "./bin/ralph-harness.mjs"
+    "ralph-harness": "bin/ralph-harness.mjs"
   },
   "scripts": {
     "check": "node --check ./bin/ralph-harness.mjs && node ./bin/ralph-harness.mjs init /private/tmp/ralph-harness-check --force && node ./bin/ralph-harness.mjs doctor /private/tmp/ralph-harness-check"
@@ -15,6 +15,7 @@
     "coding-agent",
     "claude-code",
     "codex",
+    "cursor",
     "multi-agent"
   ],
   "author": "",

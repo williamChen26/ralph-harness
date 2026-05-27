@@ -1,6 +1,6 @@
 # Skills
 
-Ralph Harness skills follow the common `skills/<name>/SKILL.md` layout used by Agent Skills repositories.
+Ralph Harness skills follow the standard `skills/<name>/SKILL.md` Agent Skills layout.
 
 ## Direct Use
 
@@ -13,22 +13,27 @@ Follow skills/harness/SKILL.md to run the Ralph loop for this feature.
 ## Install With The Standard Skills CLI
 
 ```sh
-# Install one skill into Claude Code
-npx skills add <owner>/ralph-harness --skill harness -a claude-code
-
-# Install one skill into Codex
-npx skills add <owner>/ralph-harness --skill harness -a codex
-
-# Install all skills
-npx skills add <owner>/ralph-harness --skill '*' -a claude-code
+npx skills@latest add williamChen26/ralph-harness
 ```
+
+The installer will let you choose which skills and target coding agents to install into. It installs skills only, not custom agents; use `ralph-harness init` for the full scaffold.
+
+## Scaffold Install Targets
+
+`ralph-harness init` copies these canonical skills into tool-specific project locations:
+
+| Target | Destination |
+| --- | --- |
+| Portable / Codex | `.agents/skills/<name>/SKILL.md` |
+| Claude Code | `.claude/skills/<name>/SKILL.md` |
+| Cursor | `.cursor/skills/<name>/SKILL.md` |
+
+Codex uses `.agents/skills` for repo-scoped skill discovery, so there is no separate `.codex/skills` copy in the scaffold.
 
 ## Manual Fallback
 
 ```sh
-# Codex-style project skills
 cp -R skills/* .agents/skills/
-
-# Claude Code-style project skills
 cp -R skills/* .claude/skills/
+cp -R skills/* .cursor/skills/
 ```
